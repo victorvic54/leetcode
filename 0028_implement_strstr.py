@@ -28,7 +28,7 @@ class Solution:
         # There is a pointer i and j in the pattern
         for j in range(1, len(needle)): 
             if (needle[i] == needle[j]):
-                needle_arr[j] = needle_arr[j-1] + 1
+                needle_arr[j] = i + 1
                 i += 1
             else:
                 # If it is different, I want to:
@@ -40,7 +40,7 @@ class Solution:
                 # that is in the previous index of j
                 while (i > 0):
                     if (needle[i] == needle[j]):                    
-                        needle_arr[j] = needle_arr[i] + 1
+                        needle_arr[j] = i + 1
                         checked = True
                         break
                     
