@@ -12,11 +12,13 @@ class Solution:
     
     
     def multiply(self, num1: str, num2: str) -> str:
+        # the multiplication table of num2 times 0-9
         num1_table = [None] * 11
         num1_table[0] = 0
         
         result = 0
         
+        # make num1 to be a bigger number
         if (len(num1) < len(num2)):
             num2, num1 = num1, num2
         

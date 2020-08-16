@@ -26,7 +26,7 @@ class Solution:
                     d_45[id1] = True
                     d_135[id2] = True
                     
-                    count = backtracking(row + 1, col_list, d_45, d_135, n, count);
+                    count = backtracking(row + 1, col_list, d_45, d_135, n, count)
                     
                     col_list[col] = False
                     d_45[id1] = False
