@@ -2,9 +2,9 @@
 # First solution
 # Use this example:
 #
-#   1 2 3 4 4 3  -> longest
-#   0 1 2 3 4 5  -> index
-#   a b c e a c
+#   1 2 3 4 4 3 4 -> longest
+#   0 1 2 3 4 5 6 -> index
+#   a b c e a c b
 #
 # Keep track of the longest (max) value for every index. Store it in a dictionary
 

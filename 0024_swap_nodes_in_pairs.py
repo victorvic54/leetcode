@@ -14,13 +14,13 @@ class Solution:
         if not (head and head.next):
             return head
         
-        result = head.next;
-        tmp = head.next.next;
+        result = head.next
+        tmp = head.next.next
         
-        result.next = head;
-        head.next = self.swapPairs(tmp);
+        result.next = head
+        head.next = self.swapPairs(tmp)
         
-        return result;
+        return result
 
     
     ###########################
