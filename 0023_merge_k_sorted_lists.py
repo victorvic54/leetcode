@@ -37,7 +37,7 @@ class Solution:
         
         
 ##############################################################################
-from Queue import PriorityQueue
+from queue import PriorityQueue
 
 class Solution:
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:

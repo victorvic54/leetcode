@@ -50,6 +50,7 @@ class Solution:
         small = 9
 
         for coordinates, domain in self.domains.items():
+            # we ignore when it is tuple because it is already filled by the question
             if type(domain) == set:
                 size = len(domain)
                 if size < small:
