@@ -31,6 +31,32 @@ class Solution:
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        counter = 0
+        my_dict = dict()
+        arr = [0] * len(s)
+        
+        if (s == ""):
+            return 0
+        
+        for i in range(len(s)):
+            char = s[i]
+            
+            if (char in my_dict):
+                counter = min(i - my_dict[char], arr[i-1] + 1)
+            else:
+                counter += 1
+            
+            my_dict[char] = i
+            arr[i] = counter
+        
+        
+        return max(arr)
+
+
+# Third solution:
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
         start = 0
         longest = 0
         my_set = set()
