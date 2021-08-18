@@ -6,4 +6,4 @@ class Solution:
             result = result ^ i
             result = result ^ nums[i]
             
-        return result ^ len(nums);
+        return result ^ len(nums)
