@@ -2,17 +2,14 @@
 
 class Solution:
     def reverse(self, x: int) -> int:
-        length = len(str(x))
+        result = 0
         negative = False
         
         if (x < 0):
-            negative = True
-            length -= 1
             x = abs(x)
+            negative = True
         
-        result = 0
-        
-        for i in range(length):
+        while (x != 0):
             result = (result * 10) + (x % 10)
             x = x // 10
         
