@@ -5,7 +5,7 @@ class Solution:
         length = len(str(x))
         negative = False
         
-        if (str(x)[0] == '-'):
+        if (x < 0):
             negative = True
             length -= 1
             x = abs(x)
@@ -13,9 +13,8 @@ class Solution:
         result = 0
         
         for i in range(length):
-            result += (x // (10 ** (length - i - 1))) * (10 ** i)
-            x = x % (10 ** (length - i - 1))
-        
+            result = (result * 10) + (x % 10)
+            x = x // 10
         
         if (result < -1 * (2**31)) or (result > 2**31 - 1):
             return 0
