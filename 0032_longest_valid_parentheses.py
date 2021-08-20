@@ -28,10 +28,7 @@ class Solution:
                         dp[i] = 2
                 else:  # To tackle: (())  ->  4
                     if (i - dp[i-1] - 1) >= 0 and (s[i - dp[i-1] - 1] == '('):
-                        if (i - dp[i-1] - 2) < 0:  # To tackle: (()))  ->  4
-                            dp[i] = dp[i-1] + 2
-                        else:  # To tackle: ()(())  ->  6
-                            dp[i] = dp[i-1] + 2 + dp[i - dp[i-1] - 2]
+                        dp[i] = dp[i-1] + 2 + dp[i - dp[i-1] - 2]
                     else:
                         dp[i] = 0
 
