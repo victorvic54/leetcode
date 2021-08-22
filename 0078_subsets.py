@@ -4,9 +4,6 @@ class Solution:
         result = []
         
         def backtracking(start, tmp_list):
-            if (len(tmp_list) > nums_len):
-                return
-            
             result.append(tmp_list.copy())
             
             for i in range(start, nums_len + 1):
