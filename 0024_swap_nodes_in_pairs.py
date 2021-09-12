@@ -36,12 +36,11 @@ class Solution:
         while (head and head.next):
             tmp = head.next.next
             head.next.next = head
-            head = head.next
             
             if (tmp and tmp.next):
-                head.next.next = tmp.next
+                head.next = tmp.next
             else:
-                head.next.next = tmp
+                head.next = tmp
 
             head = tmp
             
