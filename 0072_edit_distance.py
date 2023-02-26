@@ -1,5 +1,4 @@
 '''
-
 There is many solution and explanation out there, but how I come up with the solution
 is through drawing the table itself and figure it out.
 
