@@ -1,12 +1,10 @@
 '''
-
 This is an elegant solution of O(n). There is a lot of variation on using
 this technique (KMP). Quite long for an easy problem but you can do this in python:
 
 haystack.find(needle)
 
 and you get the damn answer  :)
-
 '''
 
 class Solution:
