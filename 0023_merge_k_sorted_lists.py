@@ -35,6 +35,31 @@ class Solution:
                 self.mergeKLists(lists[mid:])
             )
         
+
+##############################################################################
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        head = ListNode(None)
+        cursor = head
+        nodes = []
+        
+        for i in range(len(lists)):
+            node = lists[i]
+    
+            if (node):
+                heapq.heappush(nodes, (node.val, i, node))
+            
+        while nodes:
+            val, i, node = heapq.heappop(nodes)
+            cursor.next = node
+            
+            if (node.next):
+                heapq.heappush(nodes, (node.next.val, i, node.next))
+        
+            cursor = cursor.next
+        
+
+        return head.next
         
 ##############################################################################
 from queue import PriorityQueue
