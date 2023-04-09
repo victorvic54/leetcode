@@ -1,3 +1,7 @@
+"""
+Time complexity: O(26V + 26E) = O(V + E)
+Space complexity: O(26V + E) = O(V + E)
+"""
 class Solution:
     def largestPathValue(self, colors: str, edges: List[List[int]]) -> int:
         n = len(colors)
