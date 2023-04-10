@@ -6,8 +6,7 @@ class Solution:
             if (i == "{" or i == "[" or i == "("):
                 stack_ls.append(i)
             else:
-                expected = ""
-                
+                expected = ""                
                 if (i == "}"):
                     expected = "{"
                 elif (i == "]"):
