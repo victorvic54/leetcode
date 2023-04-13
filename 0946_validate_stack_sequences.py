@@ -1,5 +1,18 @@
 class Solution:
     def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
+        pop_pointer = 0
+        stack = []
+        for x in pushed:
+            stack.append(x)
+            while stack and pop_pointer < len(popped) and stack[-1] == popped[pop_pointer]:
+                stack.pop()
+                pop_pointer += 1
+
+        return pop_pointer == len(popped)
+
+
+class MySolution:
+    def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
         push_pointer = 0
         pop_pointer = 0
 
