@@ -1,7 +1,7 @@
 class Solution:
     def average(self, salary: List[int]) -> float:
         total = 0
-        min_val = float(inf)
+        min_val = float('inf')
         max_val = 0
 
         for val in salary:
