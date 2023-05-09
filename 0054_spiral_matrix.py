@@ -40,3 +40,4 @@ class Solution:
             max_left += 1
             
         return result
+
