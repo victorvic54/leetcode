@@ -1,10 +1,7 @@
 '''
-
 Note since the matrix is n * n, we dont need to have a if check when we MoveLeft and MoveUp.
 See the difference: 0054_spiral_matrix
-
 '''
-
 class Solution:
     def generateMatrix(self, n: int) -> List[List[int]]:
         result = [[-1] * n for _ in range(n)]
