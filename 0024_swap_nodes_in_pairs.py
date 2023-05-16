@@ -64,3 +64,4 @@ class Solution:
             pre = a
 
         return self.next
+
