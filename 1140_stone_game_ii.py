@@ -1,31 +1,32 @@
 """
 - Parameter p determines whose turn it is: if p=0, then Alice moves, otherwise Bob.
 - We are only considering the last n-i piles (treat piles[i] as the first pile)
-- The current value of the variable M described in the problem description is m
+- The current value of the variable M is the number of M piles that you can grab.
 """
 class Solution:
     def stoneGameII(self, piles: List[int]) -> int:
         n = len(piles)
-        dp = [[[-1] * (n + 1) for i in range(n + 1)] for p in range(0, 2)]
+        memo = {}
 
-        def f(p, i, m):
+        def backtracking(turn, i, m):
             if i == n:
                 return 0
 
-            if dp[p][i][m] != -1:
-                return dp[p][i][m]
+            if (turn, i , m) in memo:
+                return memo[(turn, i , m)]
 
-            res = 1000000 if p == 1 else -1
+            res = 1000000 if turn == "B" else -1
             s = 0
 
             for x in range(1, min(2 * m, n - i) + 1):
                 s += piles[i + x - 1]
-                if p == 0:
-                    res = max(res, s + f(1, i + x, max(m, x)))
+                if turn == "A":
+                    res = max(res, s + backtracking("B", i + x, max(m, x)))
                 else:
-                    res = min(res, f(0, i + x, max(m, x)))
+                    res = min(res, backtracking("A", i + x, max(m, x)))
 
-            dp[p][i][m] = res
+            memo[(turn, i , m)] = res
             return res
         
-        return f(0, 0, 1)
+        return backtracking("A", 0, 1)
+
