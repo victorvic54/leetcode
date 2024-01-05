@@ -7,7 +7,12 @@
 #   a b c e a c b
 #
 # Keep track of the longest (max) value for every index. Store it in a dictionary
-
+#
+# Another edge case:
+# 
+# 012345
+# abddba
+# 123123
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
