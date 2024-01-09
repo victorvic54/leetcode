@@ -27,3 +27,39 @@ class Solution:
                 ans += backtracking(j, nums[j] - nums[i], 2)
         return ans
 
+
+    # This solution is TLE
+    def numberOfArithmeticSlices(self, nums: List[int]) -> int:
+        memo = [{} for i in range(len(nums))]
+        def backtracking(prev, jump):
+            if prev != None and jump in memo[prev]:
+                return memo[prev][jump]
+
+            ans = 0
+            if prev == None:
+                counter = 0
+            else:
+                counter = prev + 1
+
+            for i in range(counter, len(nums)):
+                if jump != None:
+                    if nums[i] - nums[prev] != jump:
+                        continue
+                    else:
+                        ans += 1
+
+                next_jump = None
+                if jump == None:
+                    if prev != None:
+                        next_jump = nums[i] - nums[prev]
+                else:
+                    next_jump = jump
+
+                ans += backtracking(i, next_jump)
+
+            if prev != None:
+                memo[prev][jump] = ans
+            return ans
+
+        return backtracking(None, None)
+

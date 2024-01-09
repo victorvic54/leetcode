@@ -1,6 +1,6 @@
 class Solution:
     ##################################
-    # (1) => O(n^2) solution, passed
+    # (1.1) => O(n^2) solution, passed
     ##################################
     def lengthOfLIS(self, nums: List[int]) -> int:
         ans = 0
@@ -12,6 +12,32 @@ class Solution:
             
             ans = max(ans, dp[i])
         return ans
+    
+
+    ##################################
+    # (1.2) => O(n^2) solution, passed
+    ##################################
+    def lengthOfLIS(self, nums):
+        dp = [None] * len(nums)
+
+        def recurser(prev, start):
+            if prev != None and dp[prev] != None:
+                return dp[prev]
+
+            if start >= len(nums):
+                return 0
+        
+            ans = 0
+            for i in range(start, len(nums)):
+                if prev == None or nums[prev] < nums[i]:
+                    ans = max(ans, 1 + recurser(i, i + 1))
+
+            if prev != None:
+                dp[prev] = ans
+
+            return ans
+
+        return recurser(None, 0) 
 
 
     ###########################################
@@ -114,4 +140,29 @@ class Solution:
             return ans
 
         return backtracking(-1, 0)
+
+    #################################
+    # (6) => This solution is passed
+    #################################
+    def lengthOfLIS(self, nums):
+        dp = [None] * len(nums) # <---- main difference with (5)
+
+        def recurser(prev, start):
+            if start >= len(nums):
+                return 0
+        
+            if prev != -1 and dp[prev] != None:
+                return dp[prev]
+
+            ans = 0
+            if prev == -1 or nums[prev] < nums[start]:
+                ans = max(ans, 1 + recurser(start, start + 1))
+
+            ans = max(ans, backtracking(prev, start + 1))
+            if prev != -1:
+                dp[prev] = ans
+
+            return ans
+
+        return recurser(-1, 0)
 
