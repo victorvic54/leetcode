@@ -1,5 +1,27 @@
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        memo = {}
+        def backtracking(idx1, idx2):
+            if (idx1, idx2) in memo:
+                return memo[(idx1, idx2)]
+
+            if idx1 >= len(text1) or idx2 >= len(text2):
+                return 0
+            
+            total = 0
+            if text1[idx1] == text2[idx2]:
+                total += 1 + backtracking(idx1 + 1, idx2 + 1)
+            else:
+                total += max(backtracking(idx1 + 1, idx2), backtracking(idx1, idx2 + 1))
+            
+            memo[(idx1, idx2)] = total
+            return total
+
+        return backtracking(0, 0)
+
+
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         len_1 = len(text1)
         len_2 = len(text2)
         
