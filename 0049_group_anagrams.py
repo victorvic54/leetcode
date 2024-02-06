@@ -22,3 +22,4 @@ class Solution:
                 my_dict[temp_list] = [word]
         
         return my_dict.values()
+
