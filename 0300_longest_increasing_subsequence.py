@@ -1,5 +1,21 @@
 class Solution:
-    ##################################
+    ####################################
+    # (1.0) => O(nlogn) solution, passed
+    # Explanation: https://leetcode.com/problems/longest-increasing-subsequence/solutions/1326308/c-python-dp-binary-search-bit-segment-tree-solutions-picture-explain-o-nlogn
+    ####################################
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        segment_tree = []
+        for i in range(len(nums)):
+            if len(segment_tree) == 0 or segment_tree[-1] < nums[i]:
+                segment_tree.append(nums[i])
+                continue
+            
+            pos = bisect.bisect_left(segment_tree, nums[i])
+            segment_tree[pos] = nums[i]
+        
+        return len(segment_tree)
+
+
     # (1.1) => O(n^2) solution, passed
     ##################################
     def lengthOfLIS(self, nums: List[int]) -> int:
