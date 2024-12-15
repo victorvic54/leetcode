@@ -1,30 +1,28 @@
 class Solution:
+    # Time complexity = O(n^3)
     def numberOfArithmeticSlices(self, nums: List[int]) -> int:
         counter = defaultdict(list)
         for i in range(len(nums)):
             counter[nums[i]].append(i)
-            
+
         memo = {}
-        def backtracking(idx, diff, count):
-            if (idx, diff, count) in memo:
-                return memo[(idx, diff, count)]
-            
+        def backtracking(idx, diff):
+            if (idx, diff) in memo:
+                return memo[(idx, diff)]
+
             ans = 0
-            if count >= 3:
-                ans += 1
-            
             if nums[idx] + diff in counter:
                 for next_idx in counter[nums[idx] + diff]:
                     if idx < next_idx:
-                        ans += backtracking(next_idx, diff, count + 1)
+                        ans += 1 + backtracking(next_idx, diff)
 
-            memo[(idx, diff, count)] = ans
+            memo[(idx, diff)] = ans
             return ans
 
         ans = 0
         for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):             
-                ans += backtracking(j, nums[j] - nums[i], 2)
+            for j in range(i + 1, len(nums)):
+                ans += backtracking(j, nums[j] - nums[i])
         return ans
 
 
