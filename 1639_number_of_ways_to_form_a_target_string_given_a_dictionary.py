@@ -36,6 +36,39 @@ class Solution:
                 dp[i][j + 1] %= mod
         return dp[target_len][word_len]
 
+"""
+Backtracking + Memoization
+"""
+class Solution:
+    def numWays(self, words: List[str], target: str) -> int:
+        dict_list = [defaultdict(int) for i in range(len(words[0]))]
+        for word in words:
+            for i in range(len(word)):
+                dict_list[i][word[i]] += 1
+        
+        memo = {}
+        def backtracking(idx, fulfilled_idx):
+            if (idx, fulfilled_idx) in memo:
+                return memo[(idx, fulfilled_idx)]
+
+            if fulfilled_idx >= len(target):
+                return 1
+
+            if idx >= len(words[0]):
+                return 0
+            
+            total_ways = 0
+            wanted_letter = target[fulfilled_idx]
+            if wanted_letter in dict_list[idx]:
+                total_ways += dict_list[idx][wanted_letter] * backtracking(idx + 1, fulfilled_idx + 1)
+            total_ways += backtracking(idx + 1, fulfilled_idx)
+            memo[(idx, fulfilled_idx)] = total_ways
+            return total_ways
+        
+        MOD = 10**9 + 7
+        return backtracking(0, 0) % MOD
+
+
 
 """
 TLE Solution Backtracking + Memoization for MySolution
