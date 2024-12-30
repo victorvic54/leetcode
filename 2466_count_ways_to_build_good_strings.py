@@ -1,36 +1,42 @@
 class Solution:
     def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
-        dp = [1] + [0] * (high)
-        mod = 10 ** 9 + 7
+        MOD = 10**9 + 7
+        dp = [0] * (high + 1)
+        dp[0] = 1
+        for i in range(1, high+1):
+            if i < zero and i < one:
+                continue
 
-        for end in range(1, high + 1):
-            if end >= zero:
-                dp[end] += dp[end - zero]
-            if end >= one:
-                dp[end] += dp[end - one]
-            dp[end] %= mod
+            if i >= zero:
+                dp[i] += dp[i-zero]
+            
+            if i >= one:
+                dp[i] += dp[i-one]
+            
+            dp[i] %= MOD
 
-        return sum(dp[low : high + 1]) % mod
+        return sum(dp[low:high+1]) % MOD
 
 
-class Solution:
     def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
-        dp = [1] + [-1] * (high)
-        mod = 10 ** 9 + 7
+        MOD = 10**9 + 7
+        memo = {}
+        def backtracking(fulfilled):
+            if fulfilled in memo:
+                return memo[fulfilled]
 
-        def dfs(end):
-            if dp[end] != -1:
-                return dp[end]
-            count = 0
-            if end >= zero:
-                count += dfs(end - zero)
-            if end >= one:
-                count += dfs(end - one)
-            dp[end] = count % mod
-            return dp[end]
+            if fulfilled > high:
+                return 0
 
-        result = 0
-        for i in range(low, high + 1):
-            result = (result + dfs(i)) % mod
+            total_good_str = 0
+            if low <= fulfilled <= high:
+                total_good_str += 1
+            
+            total_good_str += backtracking(fulfilled + zero) + backtracking(fulfilled + one)
+            total_good_str %= MOD
+
+            memo[fulfilled] = total_good_str
+            return total_good_str
         
-        return result
+        return backtracking(0)
+
