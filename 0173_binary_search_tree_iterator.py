@@ -8,19 +8,19 @@
 class BSTIterator:
     def __init__(self, root):
         self.stack = list()
-        self.pushAll(root)
+        self.push_all(root)
 
     # time complexity: O(1)
     def hasNext(self):
-        return self.stack
+        return len(self.stack) > 0
 
     # time complexity avg: O(1) -> total access n nodes of the trees
     def next(self):
-        tmpNode = self.stack.pop()
-        self.pushAll(tmpNode.right)
-        return tmpNode.val
+        node = self.stack.pop()
+        self.push_all(node.right)
+        return node.val
         
-    def pushAll(self, node):
+    def push_all(self, node):
         while node is not None:
             self.stack.append(node)
             node = node.left
@@ -30,3 +30,4 @@ class BSTIterator:
 # obj = BSTIterator(root)
 # param_1 = obj.next()
 # param_2 = obj.hasNext()
+
