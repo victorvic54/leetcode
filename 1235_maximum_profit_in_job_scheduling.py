@@ -54,13 +54,38 @@ class Solution:
         return ans
 
 
+    # backtracking no TLE
+    def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
+        sorted_schedules = sorted(zip(startTime, endTime, profit), key=lambda x: x[0])
+        startTime = [x[0] for x in sorted_schedules]
+        endTime = [y[1] for y in sorted_schedules]
+        profit = [z[2] for z in sorted_schedules]
+        
+        memo = {}
+        def backtracking(start_idx):
+            if start_idx >= len(startTime):
+                return 0
+
+            if start_idx in memo:
+                return memo[start_idx]                
+            
+            max_profit = 0
+            max_profit = max(max_profit, backtracking(start_idx + 1))
+            next_start_idx = self.bisectLeft(startTime, endTime[start_idx])
+            max_profit = max(max_profit, profit[start_idx] + backtracking(next_start_idx))
+            memo[start_idx] = max_profit
+            return max_profit
+        return backtracking(0)
+
+
+
     # TLE solution backtracking
     def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
         @lru_cache(None)
-        def backtracking(next_end_time):
+        def backtracking(next_start_time):
             ans = 0
             for i in range(len(startTime)):
-                if startTime[i] < next_end_time:
+                if startTime[i] < next_start_time:
                     continue
 
                 ans = max(ans, profit[i] + backtracking(endTime[i]))
