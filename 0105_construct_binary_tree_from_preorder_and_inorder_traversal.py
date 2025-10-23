@@ -1,20 +1,20 @@
 # Time: O(n)
 # Space: O(n)
 class Solution:
-    def buildTree(self, inorder, postorder):
-        idx_map = {val: i for i, val in enumerate(inorder)}  # value → index lookup
-        post = deque(postorder)  # shared deque for O(1) pops from the end
+    def buildTree(self, preorder, inorder):
+        idx_map = {val: i for i, val in enumerate(inorder)}
+        pre = deque(preorder)
 
         def helper(left, right):
             if left > right:
                 return None
 
-            root_val = post.pop()  # root is last element in postorder
+            root_val = pre.popleft()
             root = TreeNode(root_val)
 
             mid = idx_map[root_val]
-            root.right = helper(mid + 1, right)
             root.left = helper(left, mid - 1)
+            root.right = helper(mid + 1, right)
             return root
 
         return helper(0, len(inorder) - 1)
@@ -22,12 +22,11 @@ class Solution:
 
 # O(n^2)
 class Solution:
-    def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+    def buildTree(self, preorder, inorder):
         if len(inorder) == 0:
             return None
-
-
-        root_val = postorder.pop()
+        
+        root_val = preorder.pop(0)
         root = TreeNode(root_val)
 
         idx = 0
@@ -35,7 +34,8 @@ class Solution:
             if inorder[i] == root_val:
                 idx = i
                 break
-
-        root.right = self.buildTree(inorder[idx+1:], postorder)
-        root.left = self.buildTree(inorder[:idx], postorder)
+        
+        root.left = self.buildTree(preorder, inorder[:idx])
+        root.right = self.buildTree(preorder, inorder[idx+1:])
         return root
+

@@ -4,22 +4,24 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
+#
 class Solution:
-    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-        def helper(tree, tmp_list):
-            if (not tree):
-                tmp_list.append(None)
-            else:
-                tmp_list.append(tree.val)
-            
-                if (tree.left or tree.right):
-                    helper(tree.left, tmp_list)
-                    helper(tree.right, tmp_list)
-                    
-            return tmp_list
-              
-        result_p = helper(p, [])
-        result_q = helper(q, [])
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:
+            return True
+
+        if p and not q:
+            return False
         
-        return result_p == result_q
+        if q and not p:
+            return False
+        
+        if p.val != q.val:
+            return False
+        
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+# N = number of nodes in the smaller tree
+# Time: O(N)
+# Space: O(N) (skewed)
+#        O(log N) (balanced)
