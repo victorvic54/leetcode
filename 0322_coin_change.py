@@ -1,5 +1,33 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
+        memo = {}
+        def backtracking(idx, left):
+            if (idx, left) in memo:
+                return memo[(idx, left)]
+
+            if left == 0:
+                return 0
+            
+            if left < 0:
+                return float('inf')
+            
+            if idx >= len(coins):
+                return float('inf')
+            
+            min_counter = float('inf')
+            min_counter = min(min_counter, backtracking(idx + 1, left))
+            min_counter = min(min_counter, 1 + backtracking(idx, left - coins[idx]))
+            memo[(idx, left)] = min_counter
+            return min_counter
+
+        min_counter = backtracking(0, amount)
+        return min_counter if min_counter != float('inf') else -1
+    
+# Time: O(n * amount)
+# Space: O(n * amount)
+
+
+    def coinChange(self, coins: List[int], amount: int) -> int:
         dp = [0] + ([float('inf')] * (amount))
         
         for i in range(1, amount + 1):
