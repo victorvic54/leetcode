@@ -14,18 +14,22 @@ But this solution is O(n^2)
 Now think it forward: it will be O(n)
 
 '''
-
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        curr_end = 0
-        curr_max = 0
-        result  = 0
-        
-        for i in range(len(nums) - 1):
-            curr_max = max(curr_max, i + nums[i])
-            
-            if (i == curr_end):
-                result += 1
-                curr_end = curr_max
-            
-        return result
+        max_jump = 0
+        tmp_max = 0
+        change = 0
+
+        for i in range(len(nums)):
+            if max_jump >= len(nums) - 1:
+                return change
+
+            tmp_max = max(tmp_max, i + nums[i])
+            if i == max_jump:
+                change += 1
+                max_jump = tmp_max
+
+        return change
+
+# Time: O(n)
+# Space: O(1)
