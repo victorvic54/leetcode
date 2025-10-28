@@ -2,20 +2,29 @@ class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
         result = []
         candidates.sort()
-        
-        def backtracking(index, total, tmp_list):
-            if (total - target > 0):
+
+        def backtracking(idx, curr_sum, arr):
+            if curr_sum == target:
+                result.append(arr)
                 return
-            elif (total == target):
-                result.append(tmp_list.copy())
-            else:
-                for i in range(index, len(candidates)):
-                    if (i > index and candidates[i-1] == candidates[i]):
-                        continue
-                        
-                    tmp_list.append(candidates[i])
-                    backtracking(i + 1, total + candidates[i], tmp_list)
-                    tmp_list.pop()
-                    
+
+            if idx >= len(candidates) or curr_sum > target:
+                return
+
+            # take
+            backtracking(idx + 1, curr_sum + candidates[idx], arr + [candidates[idx]])
+   
+            # don't take
+            j = idx + 1
+            while j < len(candidates) and candidates[j] == candidates[idx]:
+                j += 1
+            backtracking(j, curr_sum, arr)
+            return
+
         backtracking(0, 0, [])
         return result
+
+"""
+Time: O(n · 2ⁿ)
+Space: O(K × n), where K = number of valid combinations found
+"""

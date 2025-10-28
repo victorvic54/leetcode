@@ -1,17 +1,35 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         result = []
-        
-        def backtracking(index, total, tmp_list):
-            if (total - target > 0):
+        def backtracking(idx, curr_sum, arr):
+            if curr_sum == target:
+                result.append(arr[:])
                 return
-            elif (total == target):
-                result.append(tmp_list.copy())
-            else:
-                for i in range(index, len(candidates)):
-                    tmp_list.append(candidates[i])
-                    backtracking(i, total + candidates[i], tmp_list)
-                    tmp_list.pop()
-                    
+
+            if idx >= len(candidates) or curr_sum > target:
+                return
+            
+            # take
+            arr.append(candidates[idx])
+            backtracking(idx, curr_sum + candidates[idx], arr)
+            arr.pop()
+
+            # don't take
+            backtracking(idx + 1, curr_sum, arr)
+            return
+        
         backtracking(0, 0, [])
         return result
+
+"""
+Let:
+n = len(candidates)
+T = target
+m = min(candidates)
+You can only go as deep as T / m in the recursion tree
+Time: O(2^(T/m))
+
+Recursion depth: O(T/m)
+Output storage: depends on how many combinations exist (can also be exponential)
+Space: O(T/m) + output size
+"""

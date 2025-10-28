@@ -1,20 +1,24 @@
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        nums = sorted(nums)
         result = []
-        
-        is_used = [False] * len(nums)
-        
-        def backtracking(start, tmp_list):
-            result.append(tmp_list.copy())
-            
-            for i in range(start, len(nums)):
-                if (i > 0 and not is_used[i-1] and nums[i-1] == nums[i]):
-                    continue
+        nums.sort()
 
-                is_used[i] = True
-                backtracking(i + 1, tmp_list + [nums[i]])
-                is_used[i] = False
-        
+        def backtracking(idx, arr):
+            result.append(arr)
+            for i in range(idx, len(nums)):
+                if i > idx and nums[i] == nums[i - 1]:
+                    continue
+                backtracking(i + 1, arr + [nums[i]])
+
         backtracking(0, [])
         return result
+
+"""
+Time: O(n · 2ⁿ)
+There are up to 2ⁿ subsets; each recursive step may copy up to O(n) when doing arr + [x].
+Sorting adds O(n log n) upfront (dominated by the exponential term).
+
+Space (auxiliary): O(n) + O(n · 2ⁿ) = O(n · 2ⁿ)
+- Recursion depth and the current path.
+- To store all subsets.
+"""
