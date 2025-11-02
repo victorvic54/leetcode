@@ -1,30 +1,27 @@
 class Solution:
-    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        if (not matrix):
-            return False
-        
-        row = len(matrix)
-        col = len(matrix[0])
-        
-        row_to_search = -1
-        for i in range(1, row):
-            if (target < matrix[i][0]):
-                row_to_search = i - 1
-                break
-        
+    def bisect_right(self, arr, target):
         left = 0
-        right = col - 1
-        
-        # implement binary search here
-        while (left <= right):
+        right = len(arr)
+        while left < right:
             mid = (left + right) // 2
-            value_to_search = matrix[row_to_search][mid]
-            
-            if (value_to_search == target):
-                return True
-            elif (value_to_search < target):
+            if arr[mid] <= target:
                 left = mid + 1
             else:
-                right = mid - 1
-            
-        return False
+                right = mid
+        return left
+
+
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        if not matrix or not matrix[0]:
+            return False
+        
+        x_list = [mat[0] for mat in matrix]
+        x_idx = self.bisect_right(x_list, target) - 1
+        if x_idx < 0:
+            return False  # target is smaller than the first element in the matrix
+
+        y_idx = self.bisect_right(matrix[x_idx], target) - 1
+        return matrix[x_idx][y_idx] == target
+
+# Time: O(log m + log n)
+# Space: O(1)
