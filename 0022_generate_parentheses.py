@@ -1,17 +1,29 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        def generate(opening, closing, num_open, tmp_result, results):
-            if (len(tmp_result) == 2 * n):
-                results.append(tmp_result)
-            
-            if (opening > 0):
-                generate(opening - 1, closing, num_open + 1, tmp_result + "(", results)
-            
-            if (closing > 0):
-                if (num_open > 0):
-                    generate(opening, closing - 1, num_open - 1, tmp_result + ")", results)
-            
         results = []
-        generate(n, n, 0, "", results)
+        def backtracking(left, right, stack):
+            if left == 0 and right == 0:
+                results.append("".join(stack))
+                return
+            
+            if len(stack) == 0:
+                if left > 0:
+                    backtracking(left - 1, right, stack + ["("])
+            else:
+                if left > 0:
+                    backtracking(left - 1, right, stack + ["("])
+                if right > 0 and right > left:
+                    backtracking(left, right - 1, stack + [")"])
         
+        backtracking(n, n, [])
         return results
+
+"""
+Time: Cₙ = (1 / (n + 1)) * (2n choose n)
+Time: O(4ⁿ / √n)
+
+Space:
+Recursion depth: at most 2n, so call stack uses O(n) space.
+Output storage: there are Cₙ valid strings, each of length 2n.
+That’s O(Cₙ × n) to store all results.
+"""

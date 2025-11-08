@@ -1,5 +1,39 @@
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
+        s = []
+        n = len(heights)
+        max_area = 0
+
+        for i in range(n + 1):
+            curr_h = heights[i] if i < n else 0
+
+            while s and curr_h < heights[s[-1]]:
+                h = heights[s.pop()]
+                left_bound = s[-1] if s else -1
+                width = i - left_bound - 1
+                max_area = max(max_area, width * h)
+            
+            s.append(i)
+        return max_area
+
+"""
+Time: O(n)
+Space: O(n)
+
+| i | cur_h        | Actions during while-pop                                                           | New stack after step | max_area |
+| - | ------------ | ---------------------------------------------------------------------------------- | -------------------- | -------- |
+| 0 | 2            | —                                                                                  | `[0]`                | 0        |
+| 1 | 1            | pop h=2 → width=1 → area=2 → **max=2**                                             | `[1]`                | 2        |
+| 2 | 5            | —                                                                                  | `[1, 2]`             | 2        |
+| 3 | 6            | —                                                                                  | `[1, 2, 3]`          | 2        |
+| 4 | 2            | pop h=6 → width=1 → area=6 → **max=6**; pop h=5 → width=2 → area=10 → **max=10**   | `[1, 4]`             | 10       |
+| 5 | 3            | —                                                                                  | `[1, 4, 5]`          | 10       |
+| 6 | 0 (sentinel) | pop h=3 → width=1 → area=3; pop h=2 → width=4 → area=8; pop h=1 → width=6 → area=6 | `[6]`                | 10       |
+"""
+
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
         left_range = [1] * len(heights)
         right_range = [1] * len(heights)
         
