@@ -35,10 +35,13 @@ class Solution:
                     while (left < right) and (nums[left] == nums[left + 1]):
                         left += 1
 
-                    while (left < right) and (nums[right - 1] == nums[right]):
+                    while (left < right) and (nums[right] == nums[right - 1]):
                         right -= 1
 
                     left += 1
                     right -= 1
         
         return result
+
+# Time: O(n^2)
+# Space: O(k) -> depends on number of triplets

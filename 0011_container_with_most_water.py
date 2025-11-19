@@ -2,16 +2,16 @@ class Solution:
     def maxArea(self, height: List[int]) -> int:
         left = 0
         right = len(height) - 1
-        result = 0
-        
-        while (left < right):
-            distance = right - left
-            
-            if (height[left] < height[right]):
-                result = max(result, distance * height[left])
+        max_area = 0
+
+        while left < right:
+            if height[left] <= height[right]:
+                max_area = max(max_area, height[left] * (right - left))
                 left += 1
-            else:
-                result = max(result, distance * height[right])
+            elif height[left] > height[right]:
+                max_area = max(max_area, height[right] * (right - left))
                 right -= 1
-        
-        return result
+        return max_area
+
+# Time: O(n)
+# Space: O(1)
