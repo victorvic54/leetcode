@@ -1,28 +1,29 @@
-# brute force use division
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        numZero = 0
-        totalMult = 1
-        for num in nums:
-            if num != 0:
-                totalMult = totalMult * num
-            else:
-                numZero += 1
-        
-        ans = []
-        for num in nums:
-            if num == 0:
-                if numZero == 1:
-                    ans.append(totalMult)
-                elif numZero > 1:
-                    ans.append(0)
-            else:
-                if numZero >= 1:
-                    ans.append(0)
-                else:
-                    ans.append(int(totalMult / num))
-        return ans
+        left = deque([])
+        right = deque([])
 
+        for i in range(len(nums)):
+            if i == 0:
+                left.append(nums[i])
+            else:
+                left.append(left[-1] * nums[i])
+        
+        for j in range(len(nums) - 1, -1, -1):
+            if j == len(nums) - 1:
+                right.appendleft(nums[j])
+            else:
+                right.appendleft(right[0] * nums[j])
+        
+        result = []
+        for i in range(len(nums)):
+            l_val = left[i-1] if i - 1 >= 0 else 1
+            r_val = right[i+1] if i + 1 < len(nums) else 1
+            result.append(l_val * r_val)
+        return result
+
+# Time: O(n)
+# Space: O(n)
 
 """
 Solution without division, better solution

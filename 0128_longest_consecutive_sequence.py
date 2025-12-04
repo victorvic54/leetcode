@@ -16,6 +16,9 @@ class Solution:
             
         return ans
 
+# Time: O(n)
+# Space: O(n)
+
 
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:

@@ -1,25 +1,31 @@
-'''
-
-Well this is the easiest way to get things done, but the complexity is nklog(k)
-For nk solution, you can construct a hashmap where the key contains a 26-long-tuple that store the number
-of characters shows up in each string
-Ex: "bad" -> (1,1,0,1,0,0,0,...,0)
-
-'''
-
 class Solution:
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        my_dict = {}
-        
-        for word in strs:
-            temp_list = tuple(sorted(word))
-            
-            if (temp_list in my_dict):
-                my_data = my_dict[temp_list]
-                my_data.append(word)
-                my_dict[temp_list] = my_data
-            else:
-                my_dict[temp_list] = [word]
-        
-        return my_dict.values()
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:    
+        ans = defaultdict(list)
 
+        for s in strs:
+            key = "".join(sorted(s))
+            ans[key].append(s)
+        
+        return list(ans.values())
+
+"""
+n = number of strings
+k = maximum string length
+Time: O(n · k log k) total
+Space: O(n · k)
+"""
+
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        ans = defaultdict(list)
+
+        for s in strs:
+            # key is a tuple of 26 counts (assuming lowercase letters)
+            count = [0] * 26
+            for ch in s:
+                count[ord(ch) - ord('a')] += 1
+            ans[tuple(count)].append(s)
+
+        return list(ans.values())
+
+# Time: O(n · k)
+# Space: O(n · k)
