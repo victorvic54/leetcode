@@ -1,3 +1,22 @@
+# sliding window
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        char_idx = {}       # stores last seen index of each character
+        left = 0            # left bound of current window
+        max_len = 0
+
+        for right in range(len(s)):
+            if s[right] in char_idx and char_idx[s[right]] >= left:
+                # move left just past the last occurrence of s[right]
+                left = char_idx[s[right]] + 1
+            char_idx[s[right]] = right
+            max_len = max(max_len, right - left + 1)
+
+        return max_len
+
+# Time: O(n)
+# Space: O(k) -> the variety of the characters
+
 
 # First solution
 # Use this example:

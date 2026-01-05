@@ -1,10 +1,19 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        min_to_buy = float('inf')
-        result = 0
+        # buy = left pointer (candidate buy day)
+        # sell = right pointer (current day we consider selling)
+        buy = 0
+        max_profit = 0
 
-        for price in prices:
-            min_to_buy = min(min_to_buy, price)
-            result = max(result, price - min_to_buy)
+        for sell in range(1, len(prices)):
+            # If current price is better (lower) to buy, move the window start
+            if prices[sell] < prices[buy]:
+                buy = sell
+            else:
+                # Compute profit with current window [buy .. sell]
+                max_profit = max(max_profit, prices[sell] - prices[buy])
 
-        return result
+        return max_profit
+
+# Time: O(n)
+# Space: O(1)
