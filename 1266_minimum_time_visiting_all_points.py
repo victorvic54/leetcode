@@ -1,11 +1,12 @@
 class Solution:
     def minTimeToVisitAllPoints(self, points: List[List[int]]) -> int:
-        totalTime = 0
-        for i in range(1, len(points)):
-            x1, y1 = points[i-1]
-            x2, y2 = points[i]
-            diagonalTime = min(abs(x2 - x1), abs(y2 - y1))
-            straightTime = max(abs(x2 - x1), abs(y2 - y1)) - diagonalTime
-            totalTime += diagonalTime + straightTime
+        total_time = 0
         
-        return totalTime
+        for i in range(len(points) - 1):
+            x1, y1 = points[i]
+            x2, y2 = points[i + 1]
+
+            time = max(abs(x2 - x1), abs(y2 - y1))
+            total_time += time
+        
+        return total_time
